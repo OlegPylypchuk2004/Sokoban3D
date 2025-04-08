@@ -1,11 +1,6 @@
 using UnityEngine;
 
-public class Box : MonoBehaviour, ICellResident
+public class Box : CellResident
 {
-    [SerializeField] private Cell _currentCell;
 
-    private void Start()
-    {
-        _currentCell.Resident = this;
-    }
 }
