@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface ICellNeighborFinder
 {
-    public Cell FindNeighbor(Cell cell, Vector3 direction);
+    public Cell FindNeighbor(Cell cell, Direction direction);
 }

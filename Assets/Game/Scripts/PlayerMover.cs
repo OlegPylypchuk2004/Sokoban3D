@@ -17,19 +17,19 @@ public class PlayerMover : MonoBehaviour, ICellResident
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Move(FindNextCell(Vector3.forward));
+            Move(FindNextCell(Direction.Forward));
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            Move(FindNextCell(Vector3.back));
+            Move(FindNextCell(Direction.Backward));
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            Move(FindNextCell(Vector3.right));
+            Move(FindNextCell(Direction.Right));
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            Move(FindNextCell(Vector3.left));
+            Move(FindNextCell(Direction.Left));
         }
     }
 
@@ -64,21 +64,21 @@ public class PlayerMover : MonoBehaviour, ICellResident
         sequence.SetLink(gameObject);
     }
 
-    private Cell FindNextCell(Vector3 direction)
+    private Cell FindNextCell(Direction direction)
     {
-        if (direction == Vector3.forward)
+        if (direction == Direction.Forward)
         {
             return _currentCell.Data.ForwardCell;
         }
-        else if (direction == Vector3.back)
+        else if (direction == Direction.Backward)
         {
             return _currentCell.Data.BackCell;
         }
-        else if (direction == Vector3.right)
+        else if (direction == Direction.Right)
         {
             return _currentCell.Data.RightCell;
         }
-        else if (direction == Vector3.left)
+        else if (direction == Direction.Left)
         {
             return _currentCell.Data.LeftCell;
         }

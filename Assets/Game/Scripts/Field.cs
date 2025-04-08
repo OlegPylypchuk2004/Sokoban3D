@@ -15,10 +15,10 @@ public class Field : MonoBehaviour
 
         foreach (Cell cell in _cells)
         {
-            Cell forwardNeighbor = cellNeighborFinder.FindNeighbor(cell, Vector3.forward);
-            Cell backNeighbor = cellNeighborFinder.FindNeighbor(cell, Vector3.back);
-            Cell rightNeighbor = cellNeighborFinder.FindNeighbor(cell, Vector3.right);
-            Cell leftNeighbor = cellNeighborFinder.FindNeighbor(cell, Vector3.left);
+            Cell forwardNeighbor = cellNeighborFinder.FindNeighbor(cell, Direction.Forward);
+            Cell backNeighbor = cellNeighborFinder.FindNeighbor(cell, Direction.Backward);
+            Cell rightNeighbor = cellNeighborFinder.FindNeighbor(cell, Direction.Right);
+            Cell leftNeighbor = cellNeighborFinder.FindNeighbor(cell, Direction.Left);
 
             CellData cellData = new CellData(forwardNeighbor, backNeighbor, rightNeighbor, leftNeighbor);
             cell.Init(cellData);
