@@ -13,7 +13,7 @@ public abstract class CellResident : MonoBehaviour
         _currentCell.Resident = this;
     }
 
-    protected virtual void Move(Direction direction)
+    public virtual void Move(Direction direction)
     {
         Cell targetCell = _currentCell.GetNextCell(direction);
 
@@ -26,7 +26,7 @@ public abstract class CellResident : MonoBehaviour
         _currentCell = targetCell;
         _currentCell.Resident = this;
 
-        Vector3 targetPosition = _currentCell.transform.position + Vector3.up;
+        Vector3 targetPosition = _currentCell.transform.position;
 
         Sequence sequence = DOTween.Sequence();
 

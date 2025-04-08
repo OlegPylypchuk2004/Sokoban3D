@@ -26,4 +26,17 @@ public class Player : CellResident
             Move(Direction.Left);
         }
     }
+
+    public override void Move(Direction direction)
+    {
+        Cell targetCell = _currentCell.GetNextCell(direction);
+
+        if (targetCell != null && !targetCell.IsEmpty())
+        {
+            CellResident targetCellResident = targetCell.Resident;
+            targetCellResident.Move(direction);
+        }
+
+        base.Move(direction);
+    }
 }

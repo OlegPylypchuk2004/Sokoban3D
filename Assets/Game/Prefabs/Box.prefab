@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCell: {fileID: 0}
+  _moveDuration: 0.175
 --- !u!1 &4297999313021536951
 GameObject:
   m_ObjectHideFlags: 0
