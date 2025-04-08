@@ -8,6 +8,11 @@ public class PlayerMover : MonoBehaviour, ICellResident
 
     private bool _isMoving;
 
+    private void Start()
+    {
+        _currentCell.Resident = this;
+    }
+
     private void Update()
     {
         if (_isMoving)

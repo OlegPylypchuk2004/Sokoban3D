@@ -3,8 +3,6 @@ using UnityEngine;
 [SelectionBase]
 public class Cell : MonoBehaviour
 {
-    private ICellResident _resident;
-
     public CellData Data { get; private set; }
     public ICellResident Resident { get; set; }
 
@@ -15,6 +13,6 @@ public class Cell : MonoBehaviour
 
     public bool IsEmpty()
     {
-        return _resident == null;
+        return Resident == null;
     }
 }
