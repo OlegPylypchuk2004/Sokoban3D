@@ -1,28 +1,18 @@
 using UnityEngine;
 
-public class CellNeighborFinder
+public class CellNeighborFinder : ICellNeighborFinder
 {
-    private readonly Transform _transform;
-    private readonly BoxCollider _collider;
-    private readonly LayerMask _cellsLayerMask;
-
     private const float RayOffset = 0f;
     private const float RayDistance = 0.25f;
 
-    public CellNeighborFinder(Transform transform, BoxCollider collider, LayerMask cellsLayerMask)
+    public Cell FindNeighbor(Cell cell, Vector3 direction)
     {
-        _transform = transform;
-        _collider = collider;
-        _cellsLayerMask = cellsLayerMask;
-    }
+        Vector3 halfSize = cell.GetComponent<BoxCollider>().size / 2f;
+        Vector3 offset = Vector3.Scale(direction, new Vector3(halfSize.x, 0, halfSize.y)) + Vector3.up / 2f;
+        Vector3 origin = cell.transform.position + offset + direction.normalized * RayOffset;
+        LayerMask layerMask = 1 << cell.gameObject.layer;
 
-    public Cell FindNeighbor(Vector3 direction)
-    {
-        Vector3 halfSize = _collider.size * 0.5f;
-        Vector3 offset = Vector3.Scale(direction, new Vector3(halfSize.x, 0, halfSize.y)) + Vector3.up * 0.5f;
-        Vector3 origin = _transform.position + offset + direction.normalized * RayOffset;
-
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, RayDistance, _cellsLayerMask))
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, RayDistance, layerMask))
         {
             if (hit.collider.TryGetComponent(out Cell neighborCell))
             {
