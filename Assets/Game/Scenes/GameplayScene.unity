@@ -563,6 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentCell: {fileID: 1128156347}
+  _moveDuration: 0.175
 --- !u!114 &1060452429
 MonoBehaviour:
   m_ObjectHideFlags: 0
