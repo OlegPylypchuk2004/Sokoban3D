@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMover : MonoBehaviour
+public class PlayerMover : MonoBehaviour, ICellResident
 {
     [SerializeField] private Cell _currentCell;
 
@@ -45,14 +45,14 @@ public class PlayerMover : MonoBehaviour
             nextCell = _currentCell.Data.LeftCell;
         }
 
-        if (nextCell == null || !nextCell.IsEmpty)
+        if (nextCell == null || !nextCell.IsEmpty())
         {
             return;
         }
 
-        _currentCell.IsEmpty = true;
+        _currentCell.Resident = null;
         _currentCell = nextCell;
-        _currentCell.IsEmpty = false;
+        _currentCell.Resident = this;
 
         transform.position = _currentCell.transform.position + Vector3.up;
     }
