@@ -3,10 +3,13 @@ using UnityEngine;
 [SelectionBase]
 public class Cell : MonoBehaviour
 {
-    private CellData _data;
+    public CellData Data { get; private set; }
 
     public void Init(CellData data)
     {
-        _data = data;
+        Data = data;
+        IsEmpty = true;
     }
+
+    public bool IsEmpty;
 }

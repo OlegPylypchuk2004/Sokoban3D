@@ -8,8 +8,8 @@ public class CellData
     public CellData(Cell forwardCell, Cell backCell, Cell rightCell, Cell leftCell)
     {
         ForwardCell = forwardCell;
-        BackCell = forwardCell;
-        RightCell = forwardCell;
-        LeftCell = forwardCell;
+        BackCell = backCell;
+        RightCell = rightCell;
+        LeftCell = leftCell;
     }
 }
