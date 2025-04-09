@@ -14,6 +14,16 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         _field = Instantiate(SessionData.Level.FieldPrefab);
+
+        BoxFactory boxFactory = new BoxFactory();
+        Box boxPrefab = Resources.Load<Box>("Prefabs/Map/Box");
+
+        foreach (Cell cell in _field.BoxesCells)
+        {
+            Box box = boxFactory.Spawn(boxPrefab);
+            box.Init(cell);
+        }
+
         _player.Init(_field.PlayerCell);
 
         _inputHandler = new KeyboardInputHandler();
