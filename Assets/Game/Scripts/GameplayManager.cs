@@ -11,22 +11,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
-        _field = Instantiate(SessionData.Level.FieldPrefab);
-
-        PlayerFactory playerFactory = new PlayerFactory();
-        Player playerPrefab = Resources.Load<Player>("Prefabs/Player");
-
-        _player = playerFactory.Spawn(playerPrefab);
-        _player.Init(_field.PlayerCell);
-
-        BoxFactory boxFactory = new BoxFactory();
-        Box boxPrefab = Resources.Load<Box>("Prefabs/Box");
-
-        foreach (Cell cell in _field.BoxesCells)
-        {
-            Box box = boxFactory.Spawn(boxPrefab);
-            box.Init(cell);
-        }
+        SpawnLevel();
 
         _inputHandler = new KeyboardInputHandler();
         _inputHandler.Received += OnInputReceived;
@@ -54,6 +39,28 @@ public class GameplayManager : MonoBehaviour
         }
 
         Debug.Log(_returnMoveManager.MovesCount);
+    }
+
+    private void SpawnLevel()
+    {
+        _field = Instantiate(SessionData.Level.FieldPrefab);
+
+        PlayerFactory playerFactory = new PlayerFactory();
+        Player playerPrefab = Resources.Load<Player>("Prefabs/Player");
+
+        _player = playerFactory.Spawn(playerPrefab);
+        _player.transform.SetParent(_field.transform);
+        _player.Init(_field.PlayerCell);
+
+        BoxFactory boxFactory = new BoxFactory();
+        Box boxPrefab = Resources.Load<Box>("Prefabs/Box");
+
+        foreach (Cell cell in _field.StartBoxesCells)
+        {
+            Box box = boxFactory.Spawn(boxPrefab);
+            box.transform.SetParent(_field.transform);
+            box.Init(cell);
+        }
     }
 
     private void OnInputReceived(Direction direction)
@@ -87,6 +94,17 @@ public class GameplayManager : MonoBehaviour
         if (moveData.Count > 0)
         {
             _returnMoveManager.AddMoveData(moveData);
+        }
+
+        LevelCompleteCheck();
+    }
+
+    private void LevelCompleteCheck()
+    {
+        if (_field.IsAllBoxPlacesAreTaken())
+        {
+            Destroy(_field.gameObject);
+            SpawnLevel();
         }
     }
 }

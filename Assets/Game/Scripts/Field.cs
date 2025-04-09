@@ -6,7 +6,8 @@ public class Field : MonoBehaviour
 {
     [SerializeField] private Cell[] _cells;
     [SerializeField] private Cell _playerCell;
-    [SerializeField] private Cell[] _boxesCells;
+    [SerializeField] private Cell[] _startBoxesCells;
+    [SerializeField] private Cell[] _targetBoxesCells;
 
     private void Start()
     {
@@ -21,25 +22,47 @@ public class Field : MonoBehaviour
             Gizmos.DrawCube(_playerCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
         }
 
-        if (_boxesCells != null)
+        if (_startBoxesCells != null)
         {
-            foreach (Cell boxesCell in _boxesCells)
+            foreach (Cell boxesCell in _startBoxesCells)
             {
                 Gizmos.color = Color.red;
+                Gizmos.DrawCube(boxesCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
+            }
+        }
+
+        if (_targetBoxesCells != null)
+        {
+            foreach (Cell boxesCell in _targetBoxesCells)
+            {
+                Gizmos.color = Color.green;
                 Gizmos.DrawCube(boxesCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
             }
         }
     }
 
     public Cell PlayerCell => _playerCell;
-    public Cell[] BoxesCells => _boxesCells;
+    public Cell[] StartBoxesCells => _startBoxesCells;
+
+    public bool IsAllBoxPlacesAreTaken()
+    {
+        foreach (Cell boxCell in _targetBoxesCells)
+        {
+            if (boxCell.IsEmpty() || boxCell.Resident is Box == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private void InitCells()
     {
         ICellNeighborFinder cellNeighborFinder = new CellNeighborFinder();
         List<BoxCollider> boxColliders = new List<BoxCollider>();
 
-        foreach (Cell cell  in _cells)
+        foreach (Cell cell in _cells)
         {
             BoxCollider boxCollider = cell.AddComponent<BoxCollider>();
             boxCollider.center = Vector3.up / 2f;

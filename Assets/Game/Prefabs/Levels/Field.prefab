@@ -64,8 +64,10 @@ MonoBehaviour:
   - {fileID: 6337748572790754537}
   - {fileID: 2833803661162456642}
   _playerCell: {fileID: 6337748572790754537}
-  _boxesCells:
+  _startBoxesCells:
   - {fileID: 7773525166828823954}
+  _targetBoxesCells:
+  - {fileID: 5333640928207135234}
 --- !u!1001 &92667246431887503
 PrefabInstance:
   m_ObjectHideFlags: 0
