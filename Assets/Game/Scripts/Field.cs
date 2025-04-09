@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -35,6 +37,16 @@ public class Field : MonoBehaviour
     private void InitCells()
     {
         ICellNeighborFinder cellNeighborFinder = new CellNeighborFinder();
+        List<BoxCollider> boxColliders = new List<BoxCollider>();
+
+        foreach (Cell cell  in _cells)
+        {
+            BoxCollider boxCollider = cell.AddComponent<BoxCollider>();
+            boxCollider.center = Vector3.up / 2f;
+            boxCollider.size = Vector3.one * 0.75f;
+
+            boxColliders.Add(boxCollider);
+        }
 
         foreach (Cell cell in _cells)
         {
@@ -45,6 +57,11 @@ public class Field : MonoBehaviour
 
             CellData cellData = new CellData(forwardNeighbor, backNeighbor, rightNeighbor, leftNeighbor);
             cell.Init(cellData);
+        }
+
+        for (int i = 0; i < boxColliders.Count; i++)
+        {
+            Destroy(boxColliders[i]);
         }
     }
 }
