@@ -18,18 +18,18 @@ public abstract class CellResident : MonoBehaviour
 
     public Cell CurrentCell => _currentCell;
 
-    public virtual void Move(Direction direction, MoveType moveType = MoveType.Simple)
+    public virtual bool TryMove(Direction direction, MoveType moveType = MoveType.Simple)
     {
         if (_isMoving)
         {
-            return;
+            return false;
         }
 
         Cell targetCell = _currentCell.GetNextCell(direction);
 
         if (targetCell == null || !targetCell.IsEmpty())
         {
-            return;
+            return false;
         }
 
         Cell initialCell = _currentCell;
@@ -61,5 +61,7 @@ public abstract class CellResident : MonoBehaviour
         {
             Moved?.Invoke(direction, initialCell, _currentCell);
         }
+
+        return true;
     }
 }

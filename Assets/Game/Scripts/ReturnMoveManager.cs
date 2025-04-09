@@ -38,7 +38,7 @@ namespace ReturnMoveSystem
             if (lastMove.TryGetValue(_player, out Cell cell))
             {
                 _player.CurrentCell.Resident = null;
-                _player.Move(GetDirection(_player.CurrentCell, cell), MoveType.Return);
+                _player.TryMove(GetDirection(_player.CurrentCell, cell), MoveType.Return);
 
                 lastMove.Remove(_player);
             }

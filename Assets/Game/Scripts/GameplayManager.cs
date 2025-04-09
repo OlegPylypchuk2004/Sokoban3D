@@ -34,6 +34,19 @@ public class GameplayManager : MonoBehaviour
 
     private void OnInputReceived(Direction direction)
     {
-        _player.Move(direction);
+        if (!_player.TryMove(direction))
+        {
+            Cell targetCell = _player.CurrentCell.GetNextCell(direction);
+
+            if (targetCell != null && !targetCell.IsEmpty())
+            {
+                CellResident targetCellResident = targetCell.Resident;
+
+                if (targetCellResident.TryMove(direction))
+                {
+                    _player.TryMove(direction);
+                }
+            }
+        }
     }
 }
