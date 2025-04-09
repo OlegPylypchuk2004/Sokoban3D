@@ -17,6 +17,7 @@ public abstract class CellResident : MonoBehaviour
     }
 
     public Cell CurrentCell => _currentCell;
+    public bool IsMoving => _isMoving;
 
     public virtual bool TryMove(Direction direction, MoveType moveType = MoveType.Simple)
     {

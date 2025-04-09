@@ -25,6 +25,11 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
+        if (_player.IsMoving)
+        {
+            return;
+        }
+
         _inputHandler.Check();
 
         if (Input.GetKeyDown(KeyCode.Backspace))
