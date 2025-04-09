@@ -7,14 +7,22 @@ namespace ReturnMoveSystem
     {
         private List<Dictionary<CellResident, Direction>> _moveDatas;
 
-        public ReturnMoveManager(Player player, CellResident[] cellResidents)
+        private readonly int _maxReturnsCount; 
+
+        public ReturnMoveManager(int maxReturnsCount)
         {
             _moveDatas = new List<Dictionary<CellResident, Direction>>();
+            _maxReturnsCount = maxReturnsCount;
         }
 
         public void AddMoveData(Dictionary<CellResident, Direction> moveData)
         {
             _moveDatas.Add(moveData);
+
+            if (_moveDatas.Count > _maxReturnsCount)
+            {
+                _moveDatas.RemoveAt(0);
+            }
         }
 
         public void Return()

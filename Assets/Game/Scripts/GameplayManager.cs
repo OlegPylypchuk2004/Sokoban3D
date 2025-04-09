@@ -15,7 +15,7 @@ public class GameplayManager : MonoBehaviour
         _inputHandler = new KeyboardInputHandler();
         _inputHandler.Received += OnInputReceived;
 
-        _returnMoveManager = new ReturnMoveManager(_player, _cellResidents);
+        _returnMoveManager = new ReturnMoveManager(5);
     }
 
     private void OnDestroy()
