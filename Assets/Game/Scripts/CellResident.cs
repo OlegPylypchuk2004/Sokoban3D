@@ -18,7 +18,7 @@ public abstract class CellResident : MonoBehaviour
 
     public Cell CurrentCell => _currentCell;
 
-    public virtual void Move(Direction direction)
+    public virtual void Move(Direction direction, MoveType moveType = MoveType.Simple)
     {
         Cell targetCell = _currentCell.GetNextCell(direction);
 
@@ -50,6 +50,9 @@ public abstract class CellResident : MonoBehaviour
 
         sequence.SetLink(gameObject);
 
-        Moved?.Invoke(direction);
+        if (moveType == MoveType.Simple)
+        {
+            Moved?.Invoke(direction);
+        }
     }
 }

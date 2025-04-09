@@ -15,6 +15,9 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_returnMoveManager.MovesCount);
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            _returnMoveManager.Return();
+        }
     }
 }
