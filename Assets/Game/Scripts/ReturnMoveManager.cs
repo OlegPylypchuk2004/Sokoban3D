@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ReturnMoveSystem
 {
     public class ReturnMoveManager : IDisposable
     {
-        private List<Dictionary<CellResident, Cell>> _moveDatas;
+        private List<Dictionary<CellResident, Direction>> _moveDatas;
 
         private readonly Player _player;
         private readonly CellResident[] _cellResidents;
 
         public ReturnMoveManager(Player player, CellResident[] cellResidents)
         {
-            _moveDatas = new List<Dictionary<CellResident, Cell>>();
+            _moveDatas = new List<Dictionary<CellResident, Direction>>();
 
             _player = player;
             _cellResidents = cellResidents.Where(resident => resident != player).ToArray();
@@ -33,57 +34,55 @@ namespace ReturnMoveSystem
                 return;
             }
 
-            Dictionary<CellResident, Cell> lastMove = _moveDatas.Last();
+            Dictionary<CellResident, Direction> lastMove = _moveDatas.Last();
 
-            if (lastMove.TryGetValue(_player, out Cell cell))
+            if (lastMove.TryGetValue(_player, out Direction direction))
             {
                 _player.CurrentCell.Resident = null;
-                _player.TryMove(GetDirection(_player.CurrentCell, cell), MoveType.Return);
+                _player.TryMove(GetReverseDirection(direction), MoveType.Return);
 
                 lastMove.Remove(_player);
             }
 
-            //foreach (KeyValuePair<CellResident, Direction> entry in lastMove)
-            //{
-            //    entry.Key.CurrentCell.Resident = null;
-            //    entry.Key.Move(GetReverseDirection(entry.Value), MoveType.Return);
-            //}
+            foreach (KeyValuePair<CellResident, Direction> entry in lastMove)
+            {
+                entry.Key.CurrentCell.Resident = null;
+                entry.Key.TryMove(GetReverseDirection(entry.Value), MoveType.Return);
+            }
 
             _moveDatas.RemoveAt(_moveDatas.Count - 1);
         }
 
         public int MovesCount => _moveDatas.Count;
 
-        private void OnPlayerMoved(Direction direction, Cell fromCell, Cell toCell)
+        private void OnPlayerMoved(Direction direction)
         {
-            Dictionary<CellResident, Cell> moveData = new Dictionary<CellResident, Cell>();
-            moveData.Add(_player, fromCell);
+            Dictionary<CellResident, Direction> moveData = new Dictionary<CellResident, Direction>();
+            moveData.Add(_player, direction);
 
             foreach (CellResident cellResident in _cellResidents)
             {
-                moveData.Add(cellResident, fromCell);
+                moveData.Add(cellResident, direction);
             }
 
             _moveDatas.Add(moveData);
         }
 
-        private Direction GetDirection(Cell fromCell, Cell toCell)
+        private Direction GetReverseDirection(Direction direction)
         {
-            if (fromCell.Data.ForwardCell == toCell)
+            switch (direction)
             {
-                return Direction.Forward;
-            }
-            else if (fromCell.Data.BackCell == toCell)
-            {
-                return Direction.Backward;
-            }
-            else if (fromCell.Data.RightCell == toCell)
-            {
-                return Direction.Right;
-            }
-            else if (fromCell.Data.LeftCell == toCell)
-            {
-                return Direction.Left;
+                case Direction.Forward:
+                    return Direction.Backward;
+
+                case Direction.Backward:
+                    return Direction.Forward;
+
+                case Direction.Right:
+                    return Direction.Left;
+
+                case Direction.Left:
+                    return Direction.Right;
             }
 
             return Direction.Forward;

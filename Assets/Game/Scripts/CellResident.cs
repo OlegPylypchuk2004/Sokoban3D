@@ -9,7 +9,7 @@ public abstract class CellResident : MonoBehaviour
 
     protected bool _isMoving;
 
-    public event Action<Direction, Cell, Cell> Moved;
+    public event Action<Direction> Moved;
 
     private void Start()
     {
@@ -31,8 +31,6 @@ public abstract class CellResident : MonoBehaviour
         {
             return false;
         }
-
-        Cell initialCell = _currentCell;
 
         _currentCell.Resident = null;
         _currentCell = targetCell;
@@ -59,7 +57,7 @@ public abstract class CellResident : MonoBehaviour
 
         if (moveType == MoveType.Simple)
         {
-            Moved?.Invoke(direction, initialCell, _currentCell);
+            Moved?.Invoke(direction);
         }
 
         return true;
