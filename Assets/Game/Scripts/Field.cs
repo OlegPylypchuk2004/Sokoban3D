@@ -3,8 +3,8 @@ using UnityEngine;
 public class Field : MonoBehaviour
 {
     [SerializeField] private Cell[] _cells;
-    [SerializeField] private Box[] _boxes;
-    [SerializeField] private Cell _startCell;
+    [SerializeField] private Cell _playerCell;
+    [SerializeField] private Cell[] _boxesCells;
 
     private void Start()
     {
@@ -13,14 +13,24 @@ public class Field : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_startCell != null)
+        if (_playerCell != null)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawCube(_startCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
+            Gizmos.DrawCube(_playerCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
+        }
+
+        if (_boxesCells != null)
+        {
+            foreach (Cell boxesCell in _boxesCells)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawCube(boxesCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
+            }
         }
     }
 
-    public Cell StartCell => _startCell;
+    public Cell PlayerCell => _playerCell;
+    public Cell[] BoxesCells => _boxesCells;
 
     private void InitCells()
     {

@@ -14,7 +14,7 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         _field = Instantiate(SessionData.Level.FieldPrefab);
-        _player.Init(_field.StartCell);
+        _player.Init(_field.PlayerCell);
 
         _inputHandler = new KeyboardInputHandler();
         _inputHandler.Received += OnInputReceived;
