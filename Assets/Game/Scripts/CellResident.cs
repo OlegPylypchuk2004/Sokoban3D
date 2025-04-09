@@ -1,3 +1,4 @@
+using CellResidentMove;
 using DG.Tweening;
 using System;
 using UnityEngine;
@@ -8,8 +9,14 @@ public abstract class CellResident : MonoBehaviour
     [SerializeField] private float _moveDuration;
 
     protected bool _isMoving;
+    protected IMoveType _moveType;
 
     public event Action<Direction> Moved;
+
+    private void Awake()
+    {
+        _moveType = CreateMoveType();
+    }
 
     private void Start()
     {
@@ -19,7 +26,7 @@ public abstract class CellResident : MonoBehaviour
     public Cell CurrentCell => _currentCell;
     public bool IsMoving => _isMoving;
 
-    public virtual bool TryMove(Direction direction, MoveType moveType = MoveType.Simple)
+    public bool TryMove(Direction direction, MoveType moveType = MoveType.Simple)
     {
         if (_isMoving)
         {
@@ -37,24 +44,13 @@ public abstract class CellResident : MonoBehaviour
         _currentCell = targetCell;
         _currentCell.Resident = this;
 
-        Vector3 targetPosition = _currentCell.transform.position;
+        _isMoving = true;
 
-        Sequence sequence = DOTween.Sequence();
-
-        sequence.AppendCallback(() =>
-        {
-            _isMoving = true;
-        });
-
-        sequence.Append(transform.DOMove(targetPosition, _moveDuration)
-            .SetEase(Ease.OutQuad));
-
-        sequence.OnKill(() =>
-        {
-            _isMoving = false;
-        });
-
-        sequence.SetLink(gameObject);
+        _moveType.Move(transform, _currentCell.transform.position, _moveDuration)
+            .OnKill(() =>
+            {
+                _isMoving = false;
+            });
 
         if (moveType == MoveType.Simple)
         {
@@ -63,4 +59,6 @@ public abstract class CellResident : MonoBehaviour
 
         return true;
     }
+
+    protected abstract IMoveType CreateMoveType();
 }
