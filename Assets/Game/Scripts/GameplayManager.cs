@@ -4,27 +4,29 @@ using System.Collections.Generic;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private CellResident[] _cellResidents;
-
     private IInputHandler _inputHandler;
     private ReturnMoveManager _returnMoveManager;
     private Field _field;
+    private Player _player;
 
     private void Start()
     {
         _field = Instantiate(SessionData.Level.FieldPrefab);
 
+        PlayerFactory playerFactory = new PlayerFactory();
+        Player playerPrefab = Resources.Load<Player>("Prefabs/Player");
+
+        _player = playerFactory.Spawn(playerPrefab);
+        _player.Init(_field.PlayerCell);
+
         BoxFactory boxFactory = new BoxFactory();
-        Box boxPrefab = Resources.Load<Box>("Prefabs/Map/Box");
+        Box boxPrefab = Resources.Load<Box>("Prefabs/Box");
 
         foreach (Cell cell in _field.BoxesCells)
         {
             Box box = boxFactory.Spawn(boxPrefab);
             box.Init(cell);
         }
-
-        _player.Init(_field.PlayerCell);
 
         _inputHandler = new KeyboardInputHandler();
         _inputHandler.Received += OnInputReceived;
