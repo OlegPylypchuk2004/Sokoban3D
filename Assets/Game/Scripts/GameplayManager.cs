@@ -1,5 +1,6 @@
 using UnityEngine;
 using ReturnMoveSystem;
+using System.Collections.Generic;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -30,11 +31,19 @@ public class GameplayManager : MonoBehaviour
         {
             _returnMoveManager.Return();
         }
+
+        Debug.Log(_returnMoveManager.MovesCount);
     }
 
     private void OnInputReceived(Direction direction)
     {
-        if (!_player.TryMove(direction))
+        Dictionary<CellResident, Direction> moveData = new Dictionary<CellResident, Direction>();
+
+        if (_player.TryMove(direction))
+        {
+            moveData.Add(_player, direction);
+        }
+        else
         {
             Cell targetCell = _player.CurrentCell.GetNextCell(direction);
 
@@ -44,9 +53,19 @@ public class GameplayManager : MonoBehaviour
 
                 if (targetCellResident.TryMove(direction))
                 {
-                    _player.TryMove(direction);
+                    if (_player.TryMove(direction))
+                    {
+                        moveData.Add(_player, direction);
+                    }
+
+                    moveData.Add(targetCellResident, direction);
                 }
             }
+        }
+
+        if (moveData.Count > 0)
+        {
+            _returnMoveManager.AddMoveData(moveData);
         }
     }
 }

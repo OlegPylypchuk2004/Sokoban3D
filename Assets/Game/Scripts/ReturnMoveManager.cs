@@ -1,30 +1,20 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace ReturnMoveSystem
 {
-    public class ReturnMoveManager : IDisposable
+    public class ReturnMoveManager
     {
         private List<Dictionary<CellResident, Direction>> _moveDatas;
-
-        private readonly Player _player;
-        private readonly CellResident[] _cellResidents;
 
         public ReturnMoveManager(Player player, CellResident[] cellResidents)
         {
             _moveDatas = new List<Dictionary<CellResident, Direction>>();
-
-            _player = player;
-            _cellResidents = cellResidents.Where(resident => resident != player).ToArray();
-
-            _player.Moved += OnPlayerMoved;
         }
 
-        public void Dispose()
+        public void AddMoveData(Dictionary<CellResident, Direction> moveData)
         {
-            _player.Moved -= OnPlayerMoved;
+            _moveDatas.Add(moveData);
         }
 
         public void Return()
@@ -34,19 +24,8 @@ namespace ReturnMoveSystem
                 return;
             }
 
-            Dictionary<CellResident, Direction> lastMove = _moveDatas.Last();
-
-            if (lastMove.TryGetValue(_player, out Direction direction))
+            foreach (KeyValuePair<CellResident, Direction> entry in _moveDatas.Last())
             {
-                _player.CurrentCell.Resident = null;
-                _player.TryMove(GetReverseDirection(direction), MoveType.Return);
-
-                lastMove.Remove(_player);
-            }
-
-            foreach (KeyValuePair<CellResident, Direction> entry in lastMove)
-            {
-                entry.Key.CurrentCell.Resident = null;
                 entry.Key.TryMove(GetReverseDirection(entry.Value), MoveType.Return);
             }
 
@@ -54,19 +33,6 @@ namespace ReturnMoveSystem
         }
 
         public int MovesCount => _moveDatas.Count;
-
-        private void OnPlayerMoved(Direction direction)
-        {
-            Dictionary<CellResident, Direction> moveData = new Dictionary<CellResident, Direction>();
-            moveData.Add(_player, direction);
-
-            foreach (CellResident cellResident in _cellResidents)
-            {
-                moveData.Add(cellResident, direction);
-            }
-
-            _moveDatas.Add(moveData);
-        }
 
         private Direction GetReverseDirection(Direction direction)
         {
