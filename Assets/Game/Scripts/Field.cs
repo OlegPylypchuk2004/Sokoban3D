@@ -3,11 +3,24 @@ using UnityEngine;
 public class Field : MonoBehaviour
 {
     [SerializeField] private Cell[] _cells;
+    [SerializeField] private Box[] _boxes;
+    [SerializeField] private Cell _startCell;
 
     private void Start()
     {
         InitCells();
     }
+
+    private void OnDrawGizmos()
+    {
+        if (_startCell != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawCube(_startCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
+        }
+    }
+
+    public Cell StartCell => _startCell;
 
     private void InitCells()
     {

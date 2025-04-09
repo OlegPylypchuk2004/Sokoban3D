@@ -5,11 +5,11 @@ using UnityEngine;
 
 public abstract class CellResident : MonoBehaviour
 {
-    [SerializeField] protected Cell _currentCell;
     [SerializeField] private float _moveDuration;
 
-    protected bool _isMoving;
+    protected Cell _currentCell;
     protected IMoveType _moveType;
+    protected bool _isMoving;
 
     public event Action<Direction> Moved;
 
@@ -18,13 +18,15 @@ public abstract class CellResident : MonoBehaviour
         _moveType = CreateMoveType();
     }
 
-    private void Start()
-    {
-        _currentCell.Resident = this;
-    }
-
     public Cell CurrentCell => _currentCell;
     public bool IsMoving => _isMoving;
+
+    public void Init(Cell currentCell)
+    {
+        _currentCell = currentCell;
+        _currentCell.Resident = this;
+        transform.position = _currentCell.transform.position;
+    }
 
     public bool TryMove(Direction direction, MoveType moveType = MoveType.Simple)
     {

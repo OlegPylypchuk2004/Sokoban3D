@@ -9,9 +9,13 @@ public class GameplayManager : MonoBehaviour
 
     private IInputHandler _inputHandler;
     private ReturnMoveManager _returnMoveManager;
+    private Field _field;
 
     private void Start()
     {
+        _field = Instantiate(SessionData.Level.FieldPrefab);
+        _player.Init(_field.StartCell);
+
         _inputHandler = new KeyboardInputHandler();
         _inputHandler.Received += OnInputReceived;
 
