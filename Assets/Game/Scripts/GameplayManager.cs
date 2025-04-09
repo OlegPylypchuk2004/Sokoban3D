@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GameplayManager : MonoBehaviour
 {
+    [SerializeField] private GameplayUI _ui;
+
     private IInputHandler _inputHandler;
     private ReturnMoveManager _returnMoveManager;
     private Field _field;
@@ -23,6 +25,8 @@ public class GameplayManager : MonoBehaviour
         _inputHandler.Received += OnInputReceived;
 
         _returnMoveManager = new ReturnMoveManager(10);
+
+        _ui.Init(_returnMoveManager);
     }
 
     private void OnDestroy()
