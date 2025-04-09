@@ -20,6 +20,11 @@ public abstract class CellResident : MonoBehaviour
 
     public virtual void Move(Direction direction, MoveType moveType = MoveType.Simple)
     {
+        if (_isMoving)
+        {
+            return;
+        }
+
         Cell targetCell = _currentCell.GetNextCell(direction);
 
         if (targetCell == null || !targetCell.IsEmpty())
