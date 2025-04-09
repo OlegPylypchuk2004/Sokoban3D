@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public abstract class CellResident : MonoBehaviour
@@ -8,10 +9,14 @@ public abstract class CellResident : MonoBehaviour
 
     protected bool _isMoving;
 
+    public event Action<Direction> Moved;
+
     private void Start()
     {
         _currentCell.Resident = this;
     }
+
+    public Cell CurrentCell => _currentCell;
 
     public virtual void Move(Direction direction)
     {
@@ -44,5 +49,7 @@ public abstract class CellResident : MonoBehaviour
         });
 
         sequence.SetLink(gameObject);
+
+        Moved?.Invoke(direction);
     }
 }
