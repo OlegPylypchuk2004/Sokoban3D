@@ -97,6 +97,7 @@ public class GameplayManager : MonoBehaviour
     {
         if (_field.IsAllBoxPlacesAreTaken())
         {
+            _returnMoveManager.ClearMoves();
             Destroy(_field.gameObject);
             SpawnLevel();
         }

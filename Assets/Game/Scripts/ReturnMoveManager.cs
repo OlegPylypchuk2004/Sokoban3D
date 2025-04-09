@@ -25,6 +25,11 @@ namespace ReturnMoveSystem
             }
         }
 
+        public void ClearMoves()
+        {
+            _moveDatas.Clear();
+        }
+
         public void Return()
         {
             if (_moveDatas.Count <= 0)
