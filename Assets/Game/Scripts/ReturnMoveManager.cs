@@ -40,6 +40,14 @@ namespace ReturnMoveSystem
             {
                 _player.CurrentCell.Resident = null;
                 _player.Move(GetReverseDirection(direction), MoveType.Return);
+
+                lastMove.Remove(_player);
+            }
+
+            foreach (KeyValuePair<CellResident, Direction> entry in lastMove)
+            {
+                entry.Key.CurrentCell.Resident = null;
+                entry.Key.Move(GetReverseDirection(entry.Value), MoveType.Return);
             }
 
             _moveDatas.RemoveAt(_moveDatas.Count - 1);
