@@ -11,6 +11,12 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerFactory playerFactory = new PlayerFactory();
+        Player playerPrefab = Resources.Load<Player>("Prefabs/Player");
+
+        _player = playerFactory.Spawn(playerPrefab);
+        _player.Moved += OnPlayerMoved;
+
         SpawnLevel();
 
         _inputHandler = new KeyboardInputHandler();
@@ -21,6 +27,7 @@ public class GameplayManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        _player.Moved -= OnPlayerMoved;
         _inputHandler.Received -= OnInputReceived;
     }
 
@@ -44,23 +51,12 @@ public class GameplayManager : MonoBehaviour
     private void SpawnLevel()
     {
         _field = Instantiate(SessionData.Level.FieldPrefab);
+        _field.Init(_player);
+    }
 
-        PlayerFactory playerFactory = new PlayerFactory();
-        Player playerPrefab = Resources.Load<Player>("Prefabs/Player");
-
-        _player = playerFactory.Spawn(playerPrefab);
-        _player.transform.SetParent(_field.transform);
-        _player.Init(_field.PlayerCell);
-
-        BoxFactory boxFactory = new BoxFactory();
-        Box boxPrefab = Resources.Load<Box>("Prefabs/Box");
-
-        foreach (Cell cell in _field.StartBoxesCells)
-        {
-            Box box = boxFactory.Spawn(boxPrefab);
-            box.transform.SetParent(_field.transform);
-            box.Init(cell);
-        }
+    private void OnPlayerMoved(Direction direction)
+    {
+        LevelCompleteCheck();
     }
 
     private void OnInputReceived(Direction direction)
@@ -95,8 +91,6 @@ public class GameplayManager : MonoBehaviour
         {
             _returnMoveManager.AddMoveData(moveData);
         }
-
-        LevelCompleteCheck();
     }
 
     private void LevelCompleteCheck()

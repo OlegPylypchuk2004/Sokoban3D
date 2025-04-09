@@ -1,25 +1,21 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Field : MonoBehaviour
 {
     [SerializeField] private Cell[] _cells;
-    [SerializeField] private Cell _playerCell;
+    [SerializeField] private Cell _startCell;
     [SerializeField] private Cell[] _startBoxesCells;
     [SerializeField] private Cell[] _targetBoxesCells;
 
-    private void Start()
-    {
-        InitCells();
-    }
-
     private void OnDrawGizmos()
     {
-        if (_playerCell != null)
+        if (_startCell != null)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawCube(_playerCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
+            Gizmos.DrawCube(_startCell.transform.position + Vector3.up * 0.25f / 2, Vector3.one * 0.25f);
         }
 
         if (_startBoxesCells != null)
@@ -41,8 +37,22 @@ public class Field : MonoBehaviour
         }
     }
 
-    public Cell PlayerCell => _playerCell;
-    public Cell[] StartBoxesCells => _startBoxesCells;
+    public void Init(Player player)
+    {
+        InitCells();
+
+        BoxFactory boxFactory = new BoxFactory();
+        Box boxPrefab = Resources.Load<Box>("Prefabs/Box");
+
+        foreach (Cell cell in _startBoxesCells)
+        {
+            Box box = boxFactory.Spawn(boxPrefab);
+            box.transform.SetParent(transform);
+            box.Init(cell);
+        }
+
+        player.Init(_startCell);
+    }
 
     public bool IsAllBoxPlacesAreTaken()
     {

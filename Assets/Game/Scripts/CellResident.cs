@@ -52,12 +52,12 @@ public abstract class CellResident : MonoBehaviour
             .OnKill(() =>
             {
                 _isMoving = false;
-            });
 
-        if (moveType == MoveType.Simple)
-        {
-            Moved?.Invoke(direction);
-        }
+                if (moveType == MoveType.Simple)
+                {
+                    Moved?.Invoke(direction);
+                }
+            });
 
         return true;
     }
