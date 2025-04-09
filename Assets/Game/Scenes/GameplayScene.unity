@@ -1165,6 +1165,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 752950023454702582, guid: eb5f92019c18df5418487bcd9cd34f44, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3847193212866377743, guid: eb5f92019c18df5418487bcd9cd34f44, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
