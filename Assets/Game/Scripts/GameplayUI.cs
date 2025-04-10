@@ -1,10 +1,12 @@
 using ReturnMoveSystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameplayUI : MonoBehaviour
 {
     [SerializeField] private Button _returnMoveButton;
+    [SerializeField] private TextMeshProUGUI _movesCountTextMesh;
 
     private ReturnMoveManager _returnMoveManager;
 
@@ -41,5 +43,6 @@ public class GameplayUI : MonoBehaviour
     private void OnMovesCountChanged(int count)
     {
         _returnMoveButton.interactable = count > 0;
+        _movesCountTextMesh.text = $"Cancel move ({count})";
     }
 }
