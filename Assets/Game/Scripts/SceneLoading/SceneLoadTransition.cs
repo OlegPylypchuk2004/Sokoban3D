@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SceneLoadTransition : MonoBehaviour
 {
-    [SerializeField] private Image _image;
+    [SerializeField] private Image _fadeImage;
 
     private ISceneLoader _sceneLoader;
 
@@ -29,16 +29,23 @@ public class SceneLoadTransition : MonoBehaviour
 
     private void OnLoadStarted()
     {
-        _image.gameObject.SetActive(true);
-        _image.DOFade(1f, 0.25f);
+        _fadeImage.gameObject.SetActive(true);
+
+        _fadeImage.DOFade(1f, 0.25f)
+            .From(0f)
+            .SetEase(Ease.OutQuad)
+            .SetLink(gameObject);
     }
 
     private void OnLoadCompleted()
     {
-        _image.DOFade(0f, 0.25f)
+        _fadeImage.DOFade(0f, 0.25f)
+            .From(1f)
+            .SetEase(Ease.InQuad)
+            .SetLink(gameObject)
             .OnComplete(() =>
             {
-                _image.gameObject.SetActive(false);
+                _fadeImage.gameObject.SetActive(false);
             });
     }
 }
