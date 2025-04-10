@@ -16,11 +16,16 @@ public class GameplayUI : MonoBehaviour
     private void OnDisable()
     {
         _returnMoveButton.onClick.RemoveListener(OnReturnMoveButtonClicked);
+
+        _returnMoveManager.MovesCountChanged -= OnMovesCountChanged;
     }
 
     public void Init(ReturnMoveManager returnMoveManager)
     {
+        _returnMoveButton.interactable = false;
+
         _returnMoveManager = returnMoveManager;
+        _returnMoveManager.MovesCountChanged += OnMovesCountChanged;
     }
 
     private void OnReturnMoveButtonClicked()
@@ -31,6 +36,10 @@ public class GameplayUI : MonoBehaviour
         }
 
         _returnMoveManager.Return();
-        _returnMoveButton.interactable = _returnMoveManager.MovesCount > 0;
+    }
+
+    private void OnMovesCountChanged(int count)
+    {
+        _returnMoveButton.interactable = count > 0;
     }
 }

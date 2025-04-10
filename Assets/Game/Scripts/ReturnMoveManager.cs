@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +8,9 @@ namespace ReturnMoveSystem
     {
         private List<Dictionary<CellResident, Direction>> _moveDatas;
 
-        private readonly int _maxReturnsCount; 
+        private readonly int _maxReturnsCount;
+
+        public event Action<int> MovesCountChanged;
 
         public ReturnMoveManager(int maxReturnsCount)
         {
@@ -23,11 +26,15 @@ namespace ReturnMoveSystem
             {
                 _moveDatas.RemoveAt(0);
             }
+
+            MovesCountChanged?.Invoke(_moveDatas.Count);
         }
 
         public void ClearMoves()
         {
             _moveDatas.Clear();
+
+            MovesCountChanged?.Invoke(_moveDatas.Count);
         }
 
         public void Return()
@@ -43,6 +50,8 @@ namespace ReturnMoveSystem
             }
 
             _moveDatas.RemoveAt(_moveDatas.Count - 1);
+
+            MovesCountChanged?.Invoke(_moveDatas.Count);
         }
 
         public int MovesCount => _moveDatas.Count;
