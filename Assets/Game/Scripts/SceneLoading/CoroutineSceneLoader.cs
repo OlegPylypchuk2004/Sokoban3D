@@ -27,6 +27,11 @@ public class CoroutineSceneLoader : ISceneLoader
         _monoBehaviour.StartCoroutine(CountDelay(loadAsyncOperation, delay));
     }
 
+    public void RestartCurrent(float delay = 0f)
+    {
+        Load(SceneManager.GetActiveScene().buildIndex, delay);
+    }
+
     private IEnumerator CountDelay(AsyncOperation loadAsyncOperation, float delay)
     {
         yield return new WaitForSeconds(delay);
