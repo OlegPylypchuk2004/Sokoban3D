@@ -43,13 +43,6 @@ public class GameplayManager : MonoBehaviour
         }
 
         _inputHandler.Check();
-
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            _returnMoveManager.Return();
-        }
-
-        Debug.Log(_returnMoveManager.MovesCount);
     }
 
     private void SpawnLevel()
