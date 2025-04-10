@@ -766,6 +766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 7467497694041439483}
   _gridLayoutGroup: {fileID: 2141711592714167589}
+  _cellsCize: {x: 200, y: 200}
   _columnsCount: 4
   _rowsCount: 4
 --- !u!1 &5375388469732275737

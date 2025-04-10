@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
@@ -13,13 +14,7 @@ public class Bootstrap : MonoBehaviour
 
         _sceneLoader = new CoroutineSceneLoader(_coroutineManager);
         _sceneLoadTransition.Init(_sceneLoader);
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _sceneLoader.RestartCurrent(0.5f);
-        }
+        SceneManager.LoadScene(1);
     }
 }
