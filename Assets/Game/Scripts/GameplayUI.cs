@@ -1,4 +1,5 @@
 using ReturnMoveSystem;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button _returnMoveButton;
     [SerializeField] private TextMeshProUGUI _movesCountTextMesh;
 
+    private Player _player;
     private ReturnMoveManager _returnMoveManager;
 
     private void OnEnable()
@@ -22,8 +24,10 @@ public class GameplayUI : MonoBehaviour
         _returnMoveManager.MovesCountChanged -= OnMovesCountChanged;
     }
 
-    public void Init(ReturnMoveManager returnMoveManager)
+    public void Init(Player player, ReturnMoveManager returnMoveManager)
     {
+        _player = player;
+
         _returnMoveManager = returnMoveManager;
         _returnMoveManager.MovesCountChanged += OnMovesCountChanged;
 
@@ -43,7 +47,19 @@ public class GameplayUI : MonoBehaviour
 
     private void OnMovesCountChanged(int count)
     {
-        _returnMoveButton.interactable = count > 0;
+        _returnMoveButton.interactable = false;
         _movesCountTextMesh.text = $"Cancel move ({count})";
+
+        if (count > 0)
+        {
+            StartCoroutine(LockReturnMoveButton());
+        }
+    }
+
+    private IEnumerator LockReturnMoveButton()
+    {
+        yield return new WaitWhile(() => _player.IsMoving);
+
+        _returnMoveButton.interactable = _returnMoveManager.MovesCount > 0;
     }
 }

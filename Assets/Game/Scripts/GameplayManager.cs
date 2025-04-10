@@ -26,7 +26,7 @@ public class GameplayManager : MonoBehaviour
 
         _returnMoveManager = new ReturnMoveManager(10);
 
-        _ui.Init(_returnMoveManager);
+        _ui.Init(_player, _returnMoveManager);
     }
 
     private void OnDestroy()
