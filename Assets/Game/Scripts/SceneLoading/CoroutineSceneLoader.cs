@@ -3,67 +3,70 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CoroutineSceneLoader : ISceneLoader
+namespace SceneLoading
 {
-    private MonoBehaviour _monoBehaviour;
-
-    public CoroutineSceneLoader(MonoBehaviour monoBehaviour)
+    public class CoroutineSceneLoader : ISceneLoader
     {
-        _monoBehaviour = monoBehaviour;
-    }
+        private MonoBehaviour _monoBehaviour;
 
-    public event Action LoadStarted;
-    public event Action LoadCompleted;
-
-    public bool IsLoading { get; private set; }
-
-    public void Load(int index, float delay = 0f)
-    {
-        if (IsLoading)
+        public CoroutineSceneLoader(MonoBehaviour monoBehaviour)
         {
-            return;
+            _monoBehaviour = monoBehaviour;
         }
 
-        IsLoading = true;
+        public event Action LoadStarted;
+        public event Action LoadCompleted;
 
-        AsyncOperation loadAsyncOperation = SceneManager.LoadSceneAsync(index);
-        loadAsyncOperation.allowSceneActivation = false;
+        public bool IsLoading { get; private set; }
 
-        _monoBehaviour.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
-    }
-
-    public void Load(string name, float delay = 0f)
-    {
-        if (IsLoading)
+        public void Load(int index, float delay = 0f)
         {
-            return;
+            if (IsLoading)
+            {
+                return;
+            }
+
+            IsLoading = true;
+
+            AsyncOperation loadAsyncOperation = SceneManager.LoadSceneAsync(index);
+            loadAsyncOperation.allowSceneActivation = false;
+
+            _monoBehaviour.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
         }
 
-        IsLoading = true;
+        public void Load(string name, float delay = 0f)
+        {
+            if (IsLoading)
+            {
+                return;
+            }
 
-        AsyncOperation loadAsyncOperation = SceneManager.LoadSceneAsync(name);
-        loadAsyncOperation.allowSceneActivation = false;
+            IsLoading = true;
 
-        _monoBehaviour.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
-    }
+            AsyncOperation loadAsyncOperation = SceneManager.LoadSceneAsync(name);
+            loadAsyncOperation.allowSceneActivation = false;
 
-    public void RestartCurrent(float delay = 0f)
-    {
-        Load(SceneManager.GetActiveScene().buildIndex, delay);
-    }
+            _monoBehaviour.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
+        }
 
-    private IEnumerator LoadWithDelay(AsyncOperation loadAsyncOperation, float delay)
-    {
-        LoadStarted?.Invoke();
+        public void RestartCurrent(float delay = 0f)
+        {
+            Load(SceneManager.GetActiveScene().buildIndex, delay);
+        }
 
-        yield return new WaitForSeconds(delay);
+        private IEnumerator LoadWithDelay(AsyncOperation loadAsyncOperation, float delay)
+        {
+            LoadStarted?.Invoke();
 
-        yield return new WaitUntil(() => loadAsyncOperation.progress < 1f);
+            yield return new WaitForSeconds(delay);
 
-        loadAsyncOperation.allowSceneActivation = true;
+            yield return new WaitUntil(() => loadAsyncOperation.progress < 1f);
 
-        IsLoading = false;
+            loadAsyncOperation.allowSceneActivation = true;
 
-        LoadCompleted?.Invoke();
+            IsLoading = false;
+
+            LoadCompleted?.Invoke();
+        }
     }
 }
