@@ -48,7 +48,7 @@ public class GameplayManager : MonoBehaviour
     private void SpawnLevel()
     {
         _field = Instantiate(SessionData.Level.FieldPrefab);
-        _field.Init(_player);
+        _field.Init(_player, new FieldAppearAnimator());
     }
 
     private void OnPlayerMoved(Direction direction)

@@ -1,7 +1,6 @@
+using DG.Tweening;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Field : MonoBehaviour
 {
@@ -37,7 +36,7 @@ public class Field : MonoBehaviour
         }
     }
 
-    public void Init(Player player)
+    public void Init(Player player, IFieldAppearAnimator appearAnimator)
     {
         InitCells();
 
@@ -52,6 +51,8 @@ public class Field : MonoBehaviour
         }
 
         player.Init(_startCell);
+
+        appearAnimator.Appear(_cells, gameObject);
     }
 
     public bool IsAllBoxPlacesAreTaken()
@@ -74,7 +75,7 @@ public class Field : MonoBehaviour
 
         foreach (Cell cell in _cells)
         {
-            BoxCollider boxCollider = cell.AddComponent<BoxCollider>();
+            BoxCollider boxCollider = cell.gameObject.AddComponent<BoxCollider>();
             boxCollider.center = Vector3.up / 2f;
             boxCollider.size = Vector3.one * 0.75f;
 
