@@ -6,6 +6,7 @@ public class GameplayManager : MonoBehaviour
 {
     [SerializeField] private GameplayUI _ui;
 
+    private ISceneLoader _sceneLoader;
     private IInputHandler _inputHandler;
     private ReturnMoveManager _returnMoveManager;
     private Field _field;
@@ -13,6 +14,8 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
+        _sceneLoader = new CoroutineSceneLoader(this);
+
         PlayerFactory playerFactory = new PlayerFactory();
         Player playerPrefab = Resources.Load<Player>("Prefabs/Player");
 
