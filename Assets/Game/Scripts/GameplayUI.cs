@@ -24,10 +24,11 @@ public class GameplayUI : MonoBehaviour
 
     public void Init(ReturnMoveManager returnMoveManager)
     {
-        _returnMoveButton.interactable = false;
-
         _returnMoveManager = returnMoveManager;
         _returnMoveManager.MovesCountChanged += OnMovesCountChanged;
+
+        _returnMoveButton.interactable = _returnMoveManager.MovesCount > 0;
+        _movesCountTextMesh.text = $"Cancel move ({_returnMoveManager.MovesCount})";
     }
 
     private void OnReturnMoveButtonClicked()
