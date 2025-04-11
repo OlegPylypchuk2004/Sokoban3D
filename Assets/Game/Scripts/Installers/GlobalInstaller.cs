@@ -2,9 +2,9 @@ using SceneLoading;
 using UnityEngine;
 using Zenject;
 
-public class BootSceneInstaller : MonoInstaller
+public class GlobalInstaller : MonoInstaller
 {
-    [SerializeField] private SceneLoadTransition _sceneLoadTransition;
+    [SerializeField] private SceneLoadTransition _sceneLoadTransitionPrefab;
 
     public override void InstallBindings()
     {
@@ -30,7 +30,8 @@ public class BootSceneInstaller : MonoInstaller
     private void BindSceneLoadTransition()
     {
         Container.Bind<SceneLoadTransition>()
-            .FromInstance(_sceneLoadTransition)
-            .AsSingle();
+            .FromComponentInNewPrefab(_sceneLoadTransitionPrefab)
+            .AsSingle()
+            .NonLazy();
     }
 }

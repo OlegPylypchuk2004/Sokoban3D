@@ -18,11 +18,9 @@ namespace SceneLoading
         }
 
         [Inject]
-        public void Construct(ISceneLoader sceneLoader)
+        private void Construct(ISceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
-
-            DontDestroyOnLoad(gameObject);
 
             _sceneLoader.LoadStarted += OnLoadStarted;
             _sceneLoader.LoadCompleted += OnLoadCompleted;
