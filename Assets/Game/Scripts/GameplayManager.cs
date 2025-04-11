@@ -5,7 +5,7 @@ using SceneLoading;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] private GameplayUI _ui;
+    [SerializeField] private GameplaySceneUI _ui;
 
     private ISceneLoader _sceneLoader;
     private IInputHandler _inputHandler;
