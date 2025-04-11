@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,7 +51,7 @@ public class Field : MonoBehaviour
 
         player.Init(_startCell);
 
-        appearAnimator.Appear(_cells, gameObject);
+        //appearAnimator.Appear(_cells, gameObject);
     }
 
     public bool IsAllBoxPlacesAreTaken()
