@@ -12,7 +12,7 @@ public class LevelsScrollRect : MonoBehaviour
     {
         foreach (LevelsPanel levelPanel in _levelsPanels)
         {
-            levelPanel.Init();
+            StartCoroutine(levelPanel.Init());
         }
 
         _levelsPanelSize = _levelsPanels[0].Size;

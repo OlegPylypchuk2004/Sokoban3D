@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +9,14 @@ public class LevelsPanel : MonoBehaviour
     [SerializeField] private int _columnsCount;
     [SerializeField] private int _rowsCount;
 
-    public void Init()
+    public IEnumerator Init()
     {
+        yield return new WaitForEndOfFrame();
+
         _rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         _gridLayoutGroup.padding.left = Mathf.RoundToInt(_rectTransform.sizeDelta.x - _gridLayoutGroup.cellSize.x * _columnsCount - _gridLayoutGroup.spacing.x);
-        _gridLayoutGroup.padding.top = Mathf.RoundToInt(_rectTransform.sizeDelta.y - _gridLayoutGroup.cellSize.y * _columnsCount - _gridLayoutGroup.spacing.y);
+        _gridLayoutGroup.padding.top = Mathf.RoundToInt(_rectTransform.sizeDelta.y - _gridLayoutGroup.cellSize.y * _rowsCount - _gridLayoutGroup.spacing.y);
 
         _gridLayoutGroup.enabled = false;
     }
