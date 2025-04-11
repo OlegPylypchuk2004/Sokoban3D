@@ -16,7 +16,7 @@ public class SelectLevelSceneUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _sceneLoader.Load(1, 0.5f);
+            _sceneLoader.Load(2, 0.5f);
         }
     }
 }
