@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace SceneLoading
 {
@@ -10,23 +11,21 @@ namespace SceneLoading
 
         private ISceneLoader _sceneLoader;
 
-        private void Start()
-        {
-            DontDestroyOnLoad(gameObject);
-
-            _sceneLoader.LoadStarted += OnLoadStarted;
-            _sceneLoader.LoadCompleted += OnLoadCompleted;
-        }
-
         private void OnDestroy()
         {
             _sceneLoader.LoadStarted -= OnLoadStarted;
             _sceneLoader.LoadCompleted -= OnLoadCompleted;
         }
 
-        public void Init(ISceneLoader sceneLoader)
+        [Inject]
+        public void Construct(ISceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
+
+            DontDestroyOnLoad(gameObject);
+
+            _sceneLoader.LoadStarted += OnLoadStarted;
+            _sceneLoader.LoadCompleted += OnLoadCompleted;
         }
 
         private void OnLoadStarted()

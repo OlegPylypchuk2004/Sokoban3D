@@ -7,11 +7,11 @@ namespace SceneLoading
 {
     public class CoroutineSceneLoader : ISceneLoader
     {
-        private MonoBehaviour _monoBehaviour;
+        private CoroutineManager _coroutineManager;
 
-        public CoroutineSceneLoader(MonoBehaviour monoBehaviour)
+        public CoroutineSceneLoader(CoroutineManager coroutineManager)
         {
-            _monoBehaviour = monoBehaviour;
+            _coroutineManager = coroutineManager;
         }
 
         public event Action LoadStarted;
@@ -31,7 +31,7 @@ namespace SceneLoading
             AsyncOperation loadAsyncOperation = SceneManager.LoadSceneAsync(index);
             loadAsyncOperation.allowSceneActivation = false;
 
-            _monoBehaviour.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
+            _coroutineManager.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
         }
 
         public void Load(string name, float delay = 0f)
@@ -46,7 +46,7 @@ namespace SceneLoading
             AsyncOperation loadAsyncOperation = SceneManager.LoadSceneAsync(name);
             loadAsyncOperation.allowSceneActivation = false;
 
-            _monoBehaviour.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
+            _coroutineManager.StartCoroutine(LoadWithDelay(loadAsyncOperation, delay));
         }
 
         public void RestartCurrent(float delay = 0f)
