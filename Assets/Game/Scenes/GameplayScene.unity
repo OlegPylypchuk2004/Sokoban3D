@@ -3393,6 +3393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fadeImage: {fileID: 1582571496}
   _targetFadeImageAlpha: 0.9
+  _buttonsRectTransform: {fileID: 465426946}
   _nextLevelButton: {fileID: 2038170491}
   _menuButton: {fileID: 1664499792}
 --- !u!1 &1609460545
