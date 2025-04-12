@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adef7b1a988bcd74a88978a7d11f2309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectLevelSceneUI: {fileID: 782878271}
+  _selectLevelSceneUI: {fileID: 0}
 --- !u!114 &100427481 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3472748287967927508, guid: ab7ba2c943555f64691f709a27a9c7a9, type: 3}
@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_Content: {fileID: 157441077}
   m_Horizontal: 1
   m_Vertical: 0
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.135
@@ -1668,6 +1668,55 @@ MonoBehaviour:
   - {fileID: 1531154344}
   _contentRectTransform: {fileID: 157441077}
   _returnSpeed: 10
+  _levelButtons:
+  - {fileID: 1192012018}
+  - {fileID: 194225006}
+  - {fileID: 269108029}
+  - {fileID: 1568208030}
+  - {fileID: 289429771}
+  - {fileID: 1381997815}
+  - {fileID: 540661355}
+  - {fileID: 1554920426}
+  - {fileID: 1759199993}
+  - {fileID: 1469940715}
+  - {fileID: 148624157}
+  - {fileID: 1400047355}
+  - {fileID: 676801154}
+  - {fileID: 564097214}
+  - {fileID: 1952087631}
+  - {fileID: 1941233849}
+  - {fileID: 992460769}
+  - {fileID: 1915273012}
+  - {fileID: 380845738}
+  - {fileID: 1219667649}
+  - {fileID: 1110733859}
+  - {fileID: 136893033}
+  - {fileID: 1049027254}
+  - {fileID: 795816012}
+  - {fileID: 757964715}
+  - {fileID: 1591097415}
+  - {fileID: 416260769}
+  - {fileID: 1130989296}
+  - {fileID: 1638296090}
+  - {fileID: 1329281791}
+  - {fileID: 1095684246}
+  - {fileID: 496318076}
+  - {fileID: 1304760620}
+  - {fileID: 1429864961}
+  - {fileID: 754433154}
+  - {fileID: 594697865}
+  - {fileID: 628138236}
+  - {fileID: 1854048521}
+  - {fileID: 1625093973}
+  - {fileID: 100427481}
+  - {fileID: 937275049}
+  - {fileID: 1915023196}
+  - {fileID: 355901896}
+  - {fileID: 348984084}
+  - {fileID: 1320422905}
+  - {fileID: 437030952}
+  - {fileID: 445839817}
+  - {fileID: 181881172}
 --- !u!114 &564097214 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4396287581825144497, guid: ab7ba2c943555f64691f709a27a9c7a9, type: 3}
@@ -1845,58 +1894,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 782878269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70282bd27024fba4784b3f4a7c6fcef3, type: 3}
+  m_Script: {fileID: 11500000, guid: e0f503f68ef1d4f4bac624b1857bef8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelButtons:
-  - {fileID: 1192012018}
-  - {fileID: 194225006}
-  - {fileID: 269108029}
-  - {fileID: 1568208030}
-  - {fileID: 289429771}
-  - {fileID: 1381997815}
-  - {fileID: 540661355}
-  - {fileID: 1554920426}
-  - {fileID: 1759199993}
-  - {fileID: 1469940715}
-  - {fileID: 148624157}
-  - {fileID: 1400047355}
-  - {fileID: 676801154}
-  - {fileID: 564097214}
-  - {fileID: 1952087631}
-  - {fileID: 1941233849}
-  - {fileID: 992460769}
-  - {fileID: 1915273012}
-  - {fileID: 380845738}
-  - {fileID: 1219667649}
-  - {fileID: 1110733859}
-  - {fileID: 136893033}
-  - {fileID: 1049027254}
-  - {fileID: 795816012}
-  - {fileID: 757964715}
-  - {fileID: 1591097415}
-  - {fileID: 416260769}
-  - {fileID: 1130989296}
-  - {fileID: 1638296090}
-  - {fileID: 1329281791}
-  - {fileID: 1095684246}
-  - {fileID: 496318076}
-  - {fileID: 1304760620}
-  - {fileID: 1429864961}
-  - {fileID: 754433154}
-  - {fileID: 594697865}
-  - {fileID: 628138236}
-  - {fileID: 1854048521}
-  - {fileID: 1625093973}
-  - {fileID: 100427481}
-  - {fileID: 937275049}
-  - {fileID: 1915023196}
-  - {fileID: 355901896}
-  - {fileID: 348984084}
-  - {fileID: 1320422905}
-  - {fileID: 437030952}
-  - {fileID: 445839817}
-  - {fileID: 181881172}
+  _levelsScrollRect: {fileID: 549401826}
+  _playButton: {fileID: 1357261283}
 --- !u!114 &795816012 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3472748287967927508, guid: ab7ba2c943555f64691f709a27a9c7a9, type: 3}

@@ -3,11 +3,11 @@ using Zenject;
 
 public class SelectLevelSceneInstaller : MonoInstaller
 {
-    [SerializeField] private SelectLevelSceneUI _selectLevelSceneUI;
+    [SerializeField] private MenuSceneUI _selectLevelSceneUI;
 
     public override void InstallBindings()
     {
-        Container.Bind<SelectLevelSceneUI>()
+        Container.Bind<MenuSceneUI>()
             .FromInstance(_selectLevelSceneUI);
     }
 }
