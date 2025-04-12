@@ -47,21 +47,6 @@ public class LevelsScrollRect : MonoBehaviour
         _contentRectTransform.anchoredPosition = Vector3.Lerp(_contentRectTransform.anchoredPosition, contentTargetPosition, _returnSpeed * Time.deltaTime);
     }
 
-    public Sequence Appear()
-    {
-        gameObject.SetActive(true);
-
-        Sequence sequence = DOTween.Sequence();
-
-        sequence.Append(_contentRectTransform.DOAnchorPos(Vector3.zero, 0.5f)
-            .From(Vector3.up * -_levelsPanels[0].Size.y))
-            .SetEase(Ease.OutQuad);
-
-        sequence.SetLink(gameObject);
-
-        return sequence;
-    }
-
     private void OnLevelButtonClicked(LevelButton levelButton)
     {
         int levelNumber = Array.IndexOf(_levelButtons, levelButton) + 1;
