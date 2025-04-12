@@ -11,6 +11,7 @@ public class GameplaySceneUI : MonoBehaviour
     [SerializeField] private Button _returnMoveButton;
     [SerializeField] private Button _menuMoveButton;
     [SerializeField] private TextMeshProUGUI _movesCountTextMesh;
+    [SerializeField] private ResultPanel _resultPanel;
 
     private ISceneLoader _sceneLoader;
     private Player _player;
@@ -45,6 +46,11 @@ public class GameplaySceneUI : MonoBehaviour
 
         _returnMoveButton.interactable = _returnMoveManager.MovesCount > 0;
         _movesCountTextMesh.text = $"Cancel move ({_returnMoveManager.MovesCount})";
+    }
+
+    public void AppearResultPanel()
+    {
+        _resultPanel.Appear();
     }
 
     private void OnReturnMoveButtonClicked()

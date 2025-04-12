@@ -1,13 +1,11 @@
-using UnityEngine;
 using ReturnMoveSystem;
 using System.Collections.Generic;
-using SceneLoading;
+using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] private GameplaySceneUI _ui;
+    [SerializeField] private GameplaySceneUI _uiManager;
 
-    private ISceneLoader _sceneLoader;
     private IInputHandler _inputHandler;
     private ReturnMoveManager _returnMoveManager;
     private Field _field;
@@ -28,7 +26,7 @@ public class GameplayManager : MonoBehaviour
 
         _returnMoveManager = new ReturnMoveManager(10);
 
-        _ui.Init(_player, _returnMoveManager);
+        _uiManager.Init(_player, _returnMoveManager);
     }
 
     private void OnDestroy()
@@ -96,9 +94,10 @@ public class GameplayManager : MonoBehaviour
     {
         if (_field.IsAllBoxPlacesAreTaken())
         {
-            _returnMoveManager.ClearMoves();
-            Destroy(_field.gameObject);
-            SpawnLevel();
+            _player.Moved -= OnPlayerMoved;
+            _inputHandler.Received -= OnInputReceived;
+
+            _uiManager.AppearResultPanel();
         }
     }
 }
