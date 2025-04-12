@@ -7,6 +7,7 @@ public class ResultPanel : MonoBehaviour
 {
     [SerializeField] private Image _fadeImage;
     [SerializeField, Range(0f, 1f)] private float _targetFadeImageAlpha;
+    [SerializeField] private RectTransform _titleRectTransform;
     [SerializeField] private RectTransform _buttonsRectTransform;
     [SerializeField] private Button _nextLevelButton;
     [SerializeField] private Button _menuButton;
@@ -22,6 +23,10 @@ public class ResultPanel : MonoBehaviour
 
         sequence.Append(_fadeImage.DOFade(_targetFadeImageAlpha, 0.25f)
             .From(0f)
+            .SetEase(Ease.OutQuad));
+
+        sequence.Join(_titleRectTransform.DOAnchorPos(Vector3.up * -500f, 0.25f)
+            .From(Vector3.up * 250f)
             .SetEase(Ease.OutQuad));
 
         sequence.Join(_buttonsRectTransform.DOAnchorPos(Vector3.up * 250f, 0.25f)
